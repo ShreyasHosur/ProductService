@@ -3,6 +3,7 @@ package com.inventory.Controllers;
 import com.inventory.Model.ProductStoreData;
 import com.inventory.Model.Repositories.ProductsInfoRepository;
 import com.inventory.Model.Request.ProductInfoRequest;
+import com.inventory.Model.Response.PageDataResponse;
 import com.inventory.Model.Response.ProductIdInfoResponse;
 import com.inventory.Service.ProductsInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +35,9 @@ public class ProductsInfoController {
     }
 
     @GetMapping("get-product")
-    public Page<ProductStoreData> getproducts(@RequestParam("pageNum") int pageNum , @RequestParam("pageSize") int pageSize){
+    public PageDataResponse getproducts(@RequestParam("pageNum") int pageNum , @RequestParam("pageSize") int pageSize){
         Pageable pageable = PageRequest.of(pageNum,pageSize);
-          return productsInfoRepository.getproductStoreData(pageable);
+          return productsInfoService.getPageData(pageable);
     }
 
     @GetMapping("get-productid-info")

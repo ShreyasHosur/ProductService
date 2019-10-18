@@ -21,9 +21,6 @@ public interface ProductsInfoRepository extends JpaRepository<ProductsInfo, Inte
     @Query(value = "Select * from product_details p" , nativeQuery = true)
     Page<ProductsInfo> findProductInfoBypages(Pageable pageable);
 
-    @Query(value = "select p.product_id , p.product_category , DATE(q.sold_time) as sold_time, q.total_sp from product_details p INNER JOIN product_sold q ON p.product_id = q.product_id",nativeQuery = true)
-    Page<CategoryJoinedData> categoryData2(Pageable pageable);
-
     @Query(value = "select p.product_id , p.product_category , p.product_name , coalesce(q.quantities,'0') as quantities, coalesce(r.current_sp,'-1') as current_sp from product_details p full outer join product_remaining q on q.product_id = p.product_id full outer Join current_selling_price r on r.product_id = q.product_id",
     nativeQuery = true)
     Page<ProductStoreData> getproductStoreData(Pageable pageable);
