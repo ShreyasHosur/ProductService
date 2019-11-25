@@ -19,7 +19,6 @@ import com.inventory.products.Model.Request.ProductSellRequest;
 import com.inventory.products.Service.ProductsSellingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.transaction.Transactional;
-import javax.validation.constraints.Max;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -61,12 +60,24 @@ public class InvoiceService {
         return currentNumber;
     }
 
+    public CustomerDetails isCustomerAlreadyPresent(String mobileNumber){
+        Optional<Customer> Customer = customerRepository.findById(mobileNumber);
+        if(Customer.isPresent()){
+            return CustomerDetails.builder().firstName(Customer.get().getFirstName())
+                    .lastName(Customer.get().getLastName())
+                    .offerCodesList(Customer.get().getOfferId())
+                    .build();
+        } else {
+            return  CustomerDetails.builder().build();
+        }
+    }
+
     public AddProductResponse OnAddingProduct(ProductSellRequest productSellRequest){
         return productsSellingService.addProductInInvoice(productSellRequest);
     }
 
     @Transactional
-    public void processInvoicerRequest(InvoiceListOfProducts invoiceListOfProducts){
+    public void processInvoiceRequest(InvoiceListOfProducts invoiceListOfProducts){
         invoiceListOfProducts.getInvoiceSellingProductInfos()
                 .forEach(productInfo -> {
                     productsSellingService.SellProduct(productInfo);
@@ -81,7 +92,7 @@ public class InvoiceService {
                 .invoiceNumber(invoiceListOfProducts.getInvoiceNumber())
                 .totalCost(invoiceListOfProducts.getTotalCost())
                 .customerId(invoiceListOfProducts.getCustomerDetails().getMobileNumber())
-                .paymentStatus(PaymentStatus.FAILED)
+                .paymentStatus(PaymentStatus.PENDING)
                 .dateIssued(LocalDateTime.now())
                 .build());
     }
@@ -132,17 +143,5 @@ public class InvoiceService {
       else {
           return Collections.emptyList();
       }
-    }
-
-    public CustomerDetails isCustomerAlreadyPresent(String mobileNumber){
-        Optional<Customer> Customer = customerRepository.findById(mobileNumber);
-        if(Customer.isPresent()){
-            return CustomerDetails.builder().firstName(Customer.get().getFirstName())
-                    .lastName(Customer.get().getLastName())
-                    .offerCodesList(Customer.get().getOfferId())
-                    .build();
-        } else {
-            return  CustomerDetails.builder().build();
-        }
     }
 }

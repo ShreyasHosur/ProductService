@@ -14,13 +14,13 @@ public class ProductSellingController {
     @Autowired
     private ProductsSellingService productsSellingService;
 
-    @PostMapping("sell-product")
-    public ResponseEntity sellProduct(ProductSellRequest productSellRequest){
-        try {
-            productsSellingService.SellProduct(productSellRequest);
-        } catch (Exception e){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-        }
-        return ResponseEntity.ok().build();
-    }
+//    @PostMapping("sell-product")
+//    public ResponseEntity sellProduct(ProductSellRequest productSellRequest){
+//        try {
+//            productsSellingService.SellProduct(productSellRequest);
+//        } catch (Exception e){
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+//        }
+//        return ResponseEntity.ok().build();
+//    }
 }
