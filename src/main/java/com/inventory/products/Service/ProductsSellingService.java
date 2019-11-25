@@ -12,7 +12,6 @@ import com.inventory.products.Model.Repositories.ProductsRemainingRepository;
 import com.inventory.products.Model.Request.ProductSellRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -37,7 +36,7 @@ public class ProductsSellingService {
         this.currentSellingPriceRepository = currentSellingPriceRepository;
     }
 
-    public boolean isProductinRequiredQuantity(ProductSellRequest productSellRequest) {
+    private boolean isProductinRequiredQuantity(ProductSellRequest productSellRequest) {
         Optional<ProductRemaining> pr = productsRemainingRepository.findById(productSellRequest.getProductId());
         return pr.filter(productRemaining -> productRemaining.getQuantities() >= productSellRequest.getQuantities()).isPresent();
     }

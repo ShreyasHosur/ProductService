@@ -10,5 +10,5 @@ public class InvoiceListOfProducts {
     private List<InvoiceSellingProductInfo> invoiceSellingProductInfos;
     private String invoiceNumber;
     private int totalCost;
-    private int customerId;
+    private CustomerResponse customerDetails;
 }

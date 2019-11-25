@@ -33,5 +33,5 @@ public class Invoices {
     private PaymentStatus paymentStatus;
 
     @Column(name ="customer_id")
-    private int customerId;
+    private String customerId;
 }

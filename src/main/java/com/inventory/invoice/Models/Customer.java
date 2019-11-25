@@ -1,5 +1,6 @@
 package com.inventory.invoice.Models;
 
+import com.inventory.invoice.Models.Enums.OfferCodes;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.List;
 
 @Data
 @Entity
@@ -28,5 +30,5 @@ public class Customer {
     private String lastName;
 
     @Column(name = "offer_id")
-    private int offerId;
+    private List<OfferCodes> offerId;
 }
